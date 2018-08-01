@@ -64,6 +64,8 @@
     <Compile Include="AI\Search.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="BoardDebug.cs" />
+    <Compile Include="Chess960Placer.cs" />
+    <Compile Include="ChessPlacer.cs" />
     <Compile Include="FEN.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IPieceTop.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="PieceKing.cs" />
     <Compile Include="PieceKnight.cs" />
     <Compile Include="PiecePawn.cs" />
+    <Compile Include="PiecePlacer.cs" />
     <Compile Include="PieceQueen.cs" />
     <Compile Include="PieceRook.cs" />
     <Compile Include="Pieces.cs" />

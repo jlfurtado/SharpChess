@@ -201,6 +201,15 @@ namespace SharpChess.Model
             End
         }
 
+        /// <summary>
+        /// Game mode for supporting non-standard game modes such as Chess960
+        /// </summary>
+        public enum GameMode
+        {
+            Chess,
+            Chess960
+        }
+
         #endregion
 
         #region Public Properties
@@ -472,6 +481,11 @@ namespace SharpChess.Model
         ///   Gets or sets a value indicating whether to use random opening moves.
         /// </summary>
         public static bool UseRandomOpeningMoves { get; set; }
+
+        /// <summary>
+        ///  Gets or sets a value indicating the game mode
+        /// </summary>
+        public static GameMode Mode { get; set; }
 
         #endregion
 
