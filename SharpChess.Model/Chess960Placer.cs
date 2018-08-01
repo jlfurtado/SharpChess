@@ -10,6 +10,8 @@ namespace SharpChess.Model
     /// </summary>
     public static class Chess960Placer
     {
+        private static bool s_mirror = false; // TODO: set boolean for one side to mirror other, reset for re-use
+
         /// <summary>
         /// Places the white player's pieces for a chess960 game, returns the king to be set
         /// </summary>

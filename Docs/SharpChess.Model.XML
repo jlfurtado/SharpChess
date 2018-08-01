@@ -3765,6 +3765,20 @@
             Based on the game mode, decides which piece placer to use
             </summary>
         </member>
+        <member name="M:SharpChess.Model.PiecePlacer.PlaceBlackPieces(SharpChess.Model.PlayerBlack)">
+            <summary>
+            Uses the game mode to decide which chess placer to use, then calls to that placer for the black player
+            </summary>
+            <param name="player">The player to add pieces for</param>
+            <returns>The king piece to be set</returns>
+        </member>
+        <member name="M:SharpChess.Model.PiecePlacer.PlaceWhitePieces(SharpChess.Model.PlayerWhite)">
+            <summary>
+            Uses the game mode to decide which chess placer to use, then calls to that placer for the black player
+            </summary>
+            <param name="player">The player to add pieces for</param>
+            <returns>The king piece to be set</returns>
+        </member>
         <member name="T:SharpChess.Model.PieceQueen">
             <summary>
             The piece queen.
