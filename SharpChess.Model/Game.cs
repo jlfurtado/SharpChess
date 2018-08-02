@@ -206,7 +206,13 @@ namespace SharpChess.Model
         /// </summary>
         public enum GameMode
         {
+            /// <summary>
+            /// Tells the game to play a normal game of chess, standard starting positions
+            /// </summary>
             Chess,
+            /// <summary>
+            /// Tells the game to randomize, with constraints, the starting positions, based on the rules of Chess960
+            /// </summary>
             Chess960
         }
 

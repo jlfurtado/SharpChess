@@ -1928,6 +1928,16 @@
             Game mode for supporting non-standard game modes such as Chess960
             </summary>
         </member>
+        <member name="F:SharpChess.Model.Game.GameMode.Chess">
+            <summary>
+            Tells the game to play a normal game of chess, standard starting positions
+            </summary>
+        </member>
+        <member name="F:SharpChess.Model.Game.GameMode.Chess960">
+            <summary>
+            Tells the game to randomize, with constraints, the starting positions, based on the rules of Chess960
+            </summary>
+        </member>
         <member name="P:SharpChess.Model.Game.AvailableMegaBytes">
             <summary>
               Gets the available MegaBytes of free computer memory.
