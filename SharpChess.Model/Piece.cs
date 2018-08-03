@@ -520,7 +520,7 @@ namespace SharpChess.Model
         /// <summary>
         ///   Gets or sets the identifier code for the piece. e.g. WhitePawn1
         /// </summary>
-        private PieceIdentifierCodes IdentifierCode { get; set; }
+        public PieceIdentifierCodes IdentifierCode { get; private set; }
 
         #endregion
 
@@ -604,6 +604,10 @@ namespace SharpChess.Model
             return false;
         }
 
+        public void ResetToPosition(Square position)
+        {
+            (this.StartLocation = this.Square = position).Piece = this;
+        }
 
 
         public bool CanAttackSquare(Square square)

@@ -1499,34 +1499,16 @@
             Static class that exposes seperate functionality to place pieces based on Chess960 rules
             </summary>
         </member>
-        <member name="M:SharpChess.Model.Chess960Placer.PlaceWhitePieces(SharpChess.Model.PlayerWhite)">
+        <member name="F:SharpChess.Model.Chess960Placer.RandGen">
             <summary>
-            Places the white player's pieces for a chess960 game, returns the king to be set
-            </summary>
-            <param name="player">Reference to the player object</param>
-        </member>
-        <member name="M:SharpChess.Model.Chess960Placer.PlaceBlackPieces(SharpChess.Model.PlayerBlack)">
-            <summary>
-            Places the black player's pieces for a chess960 game, returns the king to be set
-            </summary>
-            <param name="player">Reference to the player object</param>
-        </member>
-        <member name="T:SharpChess.Model.ChessPlacer">
-            <summary>
-            Static class that exposes functionality to place pieces based on regular chess rules
+             Used to generate random numbers for Chess960 game. Exposed for seeding ability.
             </summary>
         </member>
-        <member name="M:SharpChess.Model.ChessPlacer.PlaceWhitePieces(SharpChess.Model.PlayerWhite)">
+        <member name="M:SharpChess.Model.Chess960Placer.RandomPlacements">
             <summary>
-            Places the white player's pieces for a standard chess game, returns the king to be set
+            Generates random placement strings for valid Chess960 starts
             </summary>
-            <param name="player">Reference to the player object</param>
-        </member>
-        <member name="M:SharpChess.Model.ChessPlacer.PlaceBlackPieces(SharpChess.Model.PlayerBlack)">
-            <summary>
-            Places the black player's pieces for a standard chess game, returns the king to be set
-            </summary>
-            <param name="player">Reference to the player object</param>
+            <returns></returns>
         </member>
         <member name="T:SharpChess.Model.Fen">
             <summary>
@@ -1537,6 +1519,11 @@
         <member name="P:SharpChess.Model.Fen.GameStartPosition">
             <summary>
               Gets GameStartPosition.
+            </summary>
+        </member>
+        <member name="P:SharpChess.Model.Fen.Chess960StartPosition">
+            <summary>
+             Randomly generates magic string for Chess960
             </summary>
         </member>
         <member name="M:SharpChess.Model.Fen.GetBoardPosition">
@@ -3770,25 +3757,6 @@
             <param name="player"></param>
             <returns></returns>
         </member>
-        <member name="T:SharpChess.Model.PiecePlacer">
-            <summary>
-            Based on the game mode, decides which piece placer to use
-            </summary>
-        </member>
-        <member name="M:SharpChess.Model.PiecePlacer.PlaceBlackPieces(SharpChess.Model.PlayerBlack)">
-            <summary>
-            Uses the game mode to decide which chess placer to use, then calls to that placer for the black player
-            </summary>
-            <param name="player">The player to add pieces for</param>
-            <returns>The king piece to be set</returns>
-        </member>
-        <member name="M:SharpChess.Model.PiecePlacer.PlaceWhitePieces(SharpChess.Model.PlayerWhite)">
-            <summary>
-            Uses the game mode to decide which chess placer to use, then calls to that placer for the black player
-            </summary>
-            <param name="player">The player to add pieces for</param>
-            <returns>The king piece to be set</returns>
-        </member>
         <member name="T:SharpChess.Model.PieceQueen">
             <summary>
             The piece queen.
@@ -3970,6 +3938,11 @@
             <param name="piece">
             The piece.
             </param>
+        </member>
+        <member name="M:SharpChess.Model.Pieces.Clear">
+            <summary>
+            Clears the collection of pieces!
+            </summary>
         </member>
         <member name="M:SharpChess.Model.Pieces.Clone">
             <summary>

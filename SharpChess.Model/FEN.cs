@@ -52,6 +52,18 @@ namespace SharpChess.Model
             }
         }
 
+        /// <summary>
+        ///  Randomly generates magic string for Chess960
+        /// </summary>
+        public static string Chess960StartPosition
+        {
+            get
+            {
+                string placements = Chess960Placer.RandomPlacements().ToLower();
+                return $"{placements.ToLower()}/pppppppp/8/8/8/8/PPPPPPPP/{placements.ToUpper()} w KQkq - 0 1";
+            }
+        }
+
         #endregion
 
         #region Public Methods

@@ -1075,7 +1075,7 @@ namespace SharpChess.Model
         {
             if (fenString == string.Empty)
             {
-                fenString = Fen.GameStartPosition;
+                fenString = Mode == GameMode.Chess ? Fen.GameStartPosition : Fen.Chess960StartPosition;
             }
 
             Fen.Validate(fenString);

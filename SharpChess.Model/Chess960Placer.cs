@@ -9,70 +9,43 @@ namespace SharpChess.Model
     /// Static class that exposes seperate functionality to place pieces based on Chess960 rules
     /// </summary>
     public static class Chess960Placer
-    {
-        private static bool s_mirror = false; // TODO: set boolean for one side to mirror other, reset for re-use
-
+    {        
         /// <summary>
-        /// Places the white player's pieces for a chess960 game, returns the king to be set
+        ///  Used to generate random numbers for Chess960 game. Exposed for seeding ability.
         /// </summary>
-        /// <param name="player">Reference to the player object</param>
-        public static Piece PlaceWhitePieces(PlayerWhite player)
-        {
-            Piece king = new Piece(Piece.PieceNames.King, player, 4, 0, Piece.PieceIdentifierCodes.WhiteKing);
-            player.Pieces.Add(king);
-
-            player.Pieces.Add(new Piece(Piece.PieceNames.Queen, player, 3, 0, Piece.PieceIdentifierCodes.WhiteQueen));
-
-            player.Pieces.Add(new Piece(Piece.PieceNames.Rook, player, 0, 0, Piece.PieceIdentifierCodes.WhiteQueensRook));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Rook, player, 7, 0, Piece.PieceIdentifierCodes.WhiteKingsRook));
-
-            player.Pieces.Add(new Piece(Piece.PieceNames.Bishop, player, 2, 0, Piece.PieceIdentifierCodes.WhiteQueensBishop));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Bishop, player, 5, 0, Piece.PieceIdentifierCodes.WhiteKingsBishop));
-
-            player.Pieces.Add(new Piece(Piece.PieceNames.Knight, player, 1, 0, Piece.PieceIdentifierCodes.WhiteQueensKnight));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Knight, player, 6, 0, Piece.PieceIdentifierCodes.WhiteKingsKnight));
-
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 0, 1, Piece.PieceIdentifierCodes.WhitePawn1));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 1, 1, Piece.PieceIdentifierCodes.WhitePawn2));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 2, 1, Piece.PieceIdentifierCodes.WhitePawn3));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 3, 1, Piece.PieceIdentifierCodes.WhitePawn4));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 4, 1, Piece.PieceIdentifierCodes.WhitePawn5));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 5, 1, Piece.PieceIdentifierCodes.WhitePawn6));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 6, 1, Piece.PieceIdentifierCodes.WhitePawn7));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 7, 1, Piece.PieceIdentifierCodes.WhitePawn8));
-
-            return king;
-        }
-
+        public static Random RandGen = new Random();
+        
         /// <summary>
-        /// Places the black player's pieces for a chess960 game, returns the king to be set
+        /// Generates random placement strings for valid Chess960 starts
         /// </summary>
-        /// <param name="player">Reference to the player object</param>
-        public static Piece PlaceBlackPieces(PlayerBlack player)
+        /// <returns></returns>
+        public static string RandomPlacements()
         {
-            Piece king = new Piece(Piece.PieceNames.King, player, 4, 7, Piece.PieceIdentifierCodes.BlackKing);
-            player.Pieces.Add(king);
+            List<int> remainingPositions = Enumerable.Range(0, 8).ToList();
+            char[] result = new char[8];
 
-            player.Pieces.Add(new Piece(Piece.PieceNames.Queen, player, 3, 7, Piece.PieceIdentifierCodes.BlackQueen));
+            int kingPos, leftRookPos, rightRookPos, firstBishopPos, secondBishopPos, firstKnightPos, secondKnightPos, queenPos;
 
-            player.Pieces.Add(new Piece(Piece.PieceNames.Rook, player, 0, 7, Piece.PieceIdentifierCodes.BlackQueensRook));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Rook, player, 7, 7, Piece.PieceIdentifierCodes.BlackKingsRook));
+            remainingPositions.Remove(kingPos = RandGen.Next(1, 7)); // king never placed on either edge (0 || 7) so that rooks can always surround him
+            remainingPositions.Remove(leftRookPos = RandGen.Next(0, kingPos)); // place a rook randomly to the left of the king
+            remainingPositions.Remove(rightRookPos = RandGen.Next(kingPos + 1, 8)); // place a rook randomly to the right of the king
+            remainingPositions.Remove(firstBishopPos = remainingPositions[RandGen.Next(remainingPositions.Count)]); // place first bishop randomly on non-taken square
 
-            player.Pieces.Add(new Piece(Piece.PieceNames.Bishop, player, 2, 7, Piece.PieceIdentifierCodes.BlackQueensBishop));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Bishop, player, 5, 7, Piece.PieceIdentifierCodes.BlackKingsBishop));
+            // place the second bishop on a non-taken square of the opposite color
+            var secondBishopOptions = remainingPositions.Where(i => i % 2 != firstBishopPos % 2);
+            remainingPositions.Remove(secondBishopPos = secondBishopOptions.ElementAt(RandGen.Next(secondBishopOptions.Count())));
 
-            player.Pieces.Add(new Piece(Piece.PieceNames.Knight, player, 1, 7, Piece.PieceIdentifierCodes.BlackQueensKnight));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Knight, player, 6, 7, Piece.PieceIdentifierCodes.BlackKingsKnight));
+            remainingPositions.Remove(firstKnightPos = remainingPositions[RandGen.Next(remainingPositions.Count)]); // place a knight on a remaining square
+            remainingPositions.Remove(secondKnightPos = remainingPositions[RandGen.Next(remainingPositions.Count)]); // place a knight on a remaining square
+            queenPos = remainingPositions[0]; // queen is the last one :)
 
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 0, 6, Piece.PieceIdentifierCodes.BlackPawn1));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 1, 6, Piece.PieceIdentifierCodes.BlackPawn2));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 2, 6, Piece.PieceIdentifierCodes.BlackPawn3));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 3, 6, Piece.PieceIdentifierCodes.BlackPawn4));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 4, 6, Piece.PieceIdentifierCodes.BlackPawn5));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 5, 6, Piece.PieceIdentifierCodes.BlackPawn6));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 6, 6, Piece.PieceIdentifierCodes.BlackPawn7));
-            player.Pieces.Add(new Piece(Piece.PieceNames.Pawn, player, 7, 6, Piece.PieceIdentifierCodes.BlackPawn8));
-            return king;
+            result[kingPos] = 'K';
+            result[secondBishopPos] = result[firstBishopPos] = 'B';
+            result[secondKnightPos] = result[firstKnightPos] = 'N';
+            result[rightRookPos] = result[leftRookPos] = 'R';
+            result[queenPos] = 'Q';
+
+            return new string(result);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 namespace SharpChess.Model.Tests
 {
     [TestClass]
-    public class PiecePlacementTests
+    public class Chess960Tests
     {
         private bool PieceHasExpectedQualities(Piece piece, Player player, string abbreviation, Piece.PieceNames name, int? file = null, int? rank = null)
         {
@@ -178,6 +178,29 @@ namespace SharpChess.Model.Tests
                 List<Piece> blackMatches = FindPiecesWithQualities(playerBlack, white.Abbreviation, white.Name, white.StartLocation.File, 7 - white.StartLocation.Rank);
                 Assert.AreEqual(1, blackMatches.Count);
             }
+        }
+
+
+        private bool AnyDifferent(Dictionary<Square, Piece> placements, Player black, Player white)
+        {
+            foreach (Piece p in white.Pieces) { if (placements[p.StartLocation] != p) { return true; } }
+            foreach (Piece p in black.Pieces) { if (placements[p.StartLocation] != p) { return true; } }
+            return false;
+        }
+
+        [TestMethod]
+        public void ShouldYieldAll960CombinationsWithinAMillionTries()
+        {
+            HashSet<string> set = new HashSet<string>();
+
+            for (int i = 0; i < 1000000; ++i)
+            {
+                Chess960Placer.RandGen = new Random(i);
+                string res = Chess960Placer.RandomPlacements();
+                if (!set.Contains(res)) { set.Add(res); }
+            }
+
+            Assert.IsTrue(set.Count == 960);
         }
     }
 }

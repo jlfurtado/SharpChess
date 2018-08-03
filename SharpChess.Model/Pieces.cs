@@ -28,6 +28,7 @@ namespace SharpChess.Model
     #region Using
 
     using System.Collections;
+    using System.Linq;
 
     #endregion
 
@@ -72,6 +73,15 @@ namespace SharpChess.Model
         public void Add(Piece piece)
         {
             this.pieces.Add(piece);
+        }
+
+
+        /// <summary>
+        /// Clears the collection of pieces!
+        /// </summary>
+        public void Clear()
+        {
+            this.pieces.Clear();
         }
 
         /// <summary>
@@ -155,6 +165,17 @@ namespace SharpChess.Model
         public void SortByScore()
         {
             this.pieces.Sort(sorter);
+        }
+
+        public void MovePiece(Piece.PieceIdentifierCodes identifierCode, int file, int rank)
+        {
+            foreach(Piece piece in this.pieces)
+            {
+                if (piece.IdentifierCode == identifierCode)
+                {
+                    piece.ResetToPosition(Board.GetSquare(file, rank));
+                }
+            }
         }
 
         #endregion
